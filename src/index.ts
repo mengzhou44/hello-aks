@@ -3,7 +3,7 @@ import express, { Request, Response } from 'express'
 const app = express()
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Changed deployment name!')
+  res.send('Changed deployment name version 2!')
 })
 
 const port = process.env.PORT || 3000
