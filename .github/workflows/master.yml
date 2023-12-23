@@ -16,14 +16,14 @@ jobs:
       - name: Login to Azure Container Registry
         uses: azure/docker-login@v1
         with:
-          login-server: hellocontaineregistry.azurecr.io
+          login-server: menghellocontainerregistry.azurecr.io
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
       - name: Build and push Docker image
         run: |
-          docker build -t hellocontaineregistry.azurecr.io/hello-aks:latest .
-          docker push hellocontaineregistry.azurecr.io/hello-aks:latest
+          docker build -t menghellocontainerregistry.azurecr.io/hello-aks:latest .
+          docker push menghellocontainerregistry.azurecr.io/hello-aks:latest
 
       - name: Set up kubectl
         uses: azure/aks-set-context@v1
@@ -34,4 +34,4 @@ jobs:
 
       - name: Deploy to AKS
         run: |
-            kubectl set image deployment -l app=hello-app-container hello-app-container=hellocontaineregistry.azurecr.io/hello-aks:latest
+            kubectl set image deployment -l app=hello-app-container hello-app-container=menghellocontainerregistry.azurecr.io/hello-aks:latest
