@@ -1,0 +1,7 @@
+CREATE USER [c276b0aa-1f05-4a6f-82fd-ef19e217060d] FROM EXTERNAL PROVIDER
+
+ALTER ROLE db_datareader ADD MEMBER [<appservice-name>]
+
+ALTER ROLE db_datawriter ADD MEMBER [<appservice-name>]
+
+

@@ -1,5 +1,6 @@
 import dotenv from 'dotenv'
 import express, { Request, Response } from 'express'
+import { ManagedIdentityCredential } from '@azure/identity';
 import logger from './logger'
 import sql from 'mssql'
 
@@ -28,10 +29,14 @@ if (process.env.NODE_ENV === 'local') {
   Object.assign(config, {
     authentication: {
       type: 'azure-active-directory-msi-app-service',
-      options: {},
+      options: {
+        credential: new ManagedIdentityCredential(),
+      },
     },
   })
 }
+
+ 
 
 app.get('/', (req: Request, res: Response) => {
   logger.log('/', 'customer visits home page')

@@ -1,0 +1,17 @@
+1. create a virtual network with two subnets db-subnets, and cluster-subnets
+2. create meng-db and meng-db-server resource and add a private entpoint to v-net/db-subnet;
+3. create aks cluster, open Access  Controil (IAM) to grant hello-app cluster admin role (so github workflow can run deployment scripts against the cluster)
+
+4. create managed identity for aks cluster 
+az aks update --resource-group aks-course-rg  --name hello-cluster --enable-managed-identity
+
+
+az aks show --resource-group aks-course-rg  --name hello-cluster  --query identity
+
+5. assign "SQL DB Contributor role" to the managed identity 
+
+a. # Assign SQL DB Contributor role at the server level
+az role assignment create --assignee c276b0aa-1f05-4a6f-82fd-ef19e217060d  --role "SQL DB Contributor" --scope "/subscriptions/edbbf721-5f9e-4391-ba35-7adaf62f0416/resourceGroups/aks-course-rg/providers/Microsoft.Sql/servers/meng-db-server"
+
+b. # Assign SQL DB Contributor role at the database level
+az role assignment create --assignee c276b0aa-1f05-4a6f-82fd-ef19e217060d --role "SQL DB Contributor" --scope "/subscriptions/edbbf721-5f9e-4391-ba35-7adaf62f0416/resourceGroups/aks-course-rg/providers/Microsoft.Sql/servers/meng-db-server/databases/meng-db"
