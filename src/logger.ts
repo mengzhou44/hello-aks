@@ -12,9 +12,9 @@ class Logger {
       }
     }
   
-    log(message: string, event:string = '/'): void {
+    log(event:string = '/', message: string): void {
       if (this.client) {
-        this.client.trackEvent({ name: event, properties: {customProperty: message} });
+        this.client.trackEvent({ name: event, properties: { message} });
       } else {
         console.log(`Event ${event}: ${message} `);
       }

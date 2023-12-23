@@ -34,7 +34,7 @@ if (process.env.NODE_ENV === 'local') {
 }
 
 app.get('/', (req: Request, res: Response) => {
-  logger.log('customer visits home page')
+  logger.log('/', 'customer visits home page')
 
   res.send('Changed deployment name version 4!')
 })
@@ -45,12 +45,14 @@ app.get('/users', async (req, res) => {
 
   try {
     pool = await sql.connect(config)
-    const result = await pool.query`SELECT Id, Name, Active FROM [Users]`
     logger.log('/users', 'step2')
+    logger.log('/users', JSON.stringify(pool))
+    const result = await pool.query`SELECT Id, Name, Active FROM [Users]`
+
     res.send(result.recordset)
   } catch (err: any) {
-    logger.log('/users', `step3  Error fetching users: ${err.message}`)
-    res.status(500).send(err.message)
+    logger.log('/users', `error message: ${err.message}`)
+    res.status(200).send(err.message)
   } finally {
     if (pool) {
       await pool.close()
