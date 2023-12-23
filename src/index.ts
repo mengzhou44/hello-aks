@@ -1,4 +1,3 @@
-
 import dotenv from 'dotenv'
 import express, { Request, Response } from 'express'
 import logger from './logger'
@@ -42,14 +41,15 @@ app.get('/', (req: Request, res: Response) => {
 
 app.get('/users', async (req, res) => {
   let pool: sql.ConnectionPool | undefined
+  logger.log('/users', 'step1')
 
   try {
     pool = await sql.connect(config)
     const result = await pool.query`SELECT Id, Name, Active FROM [Users]`
-
+    logger.log('/users', 'step2')
     res.send(result.recordset)
   } catch (err: any) {
-    console.error('Error fetching users:', err.message)
+    logger.log('/users', `step3  Error fetching users: ${err.message}`)
     res.status(500).send(err.message)
   } finally {
     if (pool) {
@@ -63,4 +63,3 @@ const port = process.env.PORT || 3000
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`)
 })
-
