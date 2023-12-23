@@ -34,4 +34,4 @@ jobs:
 
       - name: Deploy to AKS
         run: |
-            kubectl set image deployment -l app=hello-app container-xyz=menghellocontainerregistry.azurecr.io/hello-aks:latest
+            kubectl  apply -f deployment.yaml
