@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-app
+  name: hello-app-deployment
 spec:
   selector:
     matchLabels:
-      app: hello-app-container
+      app: hello-app 
   template:
     metadata:
       labels:
-        app: hello-app-container
+        app: hello-app 
     spec:
       containers:
-        - name: hello-app-container
+        - name: container-xyz
           image: menghellocontainerregistry.azurecr.io/hello-aks:latest
           imagePullPolicy: Always
           resources:
@@ -25,11 +25,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-app
+  name: hello-app-service
 spec:
   type: LoadBalancer
   ports:
     - port: 80
       targetPort: 3000
   selector:
-    app: hello-app-container
+    app: hello-app

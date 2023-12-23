@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  build-and-push:
+  build-push-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -34,4 +34,4 @@ jobs:
 
       - name: Deploy to AKS
         run: |
-            kubectl set image deployment -l app=hello-app-container hello-app=menghellocontainerregistry.azurecr.io/hello-aks:latest
+            kubectl set image deployment -l app=hello-app container-xyz=menghellocontainerregistry.azurecr.io/hello-aks:latest
