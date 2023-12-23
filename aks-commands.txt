@@ -1,0 +1,11 @@
+az aks install-cli
+
+Set PATH
+
+az login
+
+az aks get-credentials --resource-group readit-app-rg --name cart-aks
+
+kubectl get nodes
+
+kubectl apply –f deployment.yaml

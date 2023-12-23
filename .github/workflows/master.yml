@@ -24,3 +24,14 @@ jobs:
         run: |
           docker build -t hellocontaineregistry.azurecr.io/hello-aks:latest .
           docker push hellocontaineregistry.azurecr.io/hello-aks:latest
+
+      - name: Set up kubectl
+        uses: azure/aks-set-context@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          cluster-name:  hello-cluster
+          resource-group: aks-course-rg
+
+      - name: Deploy to AKS
+        run: |
+            kubectl set image deployment -l app=hello-app-container hello-app-container=hellocontaineregistry.azurecr.io/hello-aks:latest

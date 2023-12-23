@@ -5,15 +5,16 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: hello-app
+      app: hello-app-container
   template:
     metadata:
       labels:
-        app: hello-app
+        app: hello-app-container
     spec:
       containers:
-        - name: hello-app
-          image: hellocontaineregistry.azurecr.io/hello-aks:latest
+        - name: hello-app-container
+          image: menghellocontainerregistry.azurecr.io/hello-aks:latest
+          imagePullPolicy: Always
           resources:
             limits:
               memory: '128Mi'
@@ -31,4 +32,4 @@ spec:
     - port: 80
       targetPort: 3000
   selector:
-    app: hello-app
+    app: hello-app-container
