@@ -33,12 +33,15 @@ if (process.env.NODE_ENV === 'local') {
         tokenProvider: (callback: any) => {
           msRestAzure.loginWithAppServiceMSI({ resource: 'https://database.windows.net/' }, (err: any, credentials: any) => {
             if (err) {
+              logger.log('tokenProvider err', JSON.stringify(err));
               callback(err, null);
             } else {
               credentials.getToken((tokenError: any, tokenResponse: any) => {
                 if (tokenError) {
+                  logger.log('tokenProvider token error', JSON.stringify(tokenError));
                   callback(tokenError, null);
                 } else {
+                  logger.log('tokenProvider success',  tokenResponse.accessToken);
                   callback(null, tokenResponse.accessToken);
                 }
               });
@@ -58,18 +61,13 @@ app.get('/', (req: Request, res: Response) => {
 
 app.get('/users', async (req, res) => {
   let pool: sql.ConnectionPool | undefined;
-  logger.log('/users', 'step1');
-
+ 
   try {
-    pool = await sql.connect(config);
-    logger.log('/users', 'step2');
-
-    const result = await pool.query`SELECT Id, Name, Active FROM [Users]`;
-
+    pool = await sql.connect(config);  
+    const result = await pool.query`SELECT Id, Name, Active FROM Users`;
     res.send(result.recordset);
   } catch (err: any) {
-    logger.log('/users', `Error occurred: ${JSON.stringify(err)}`);
-
+    
     res.status(500).send('Internal Server Error');
   } finally {
     if (pool) {
