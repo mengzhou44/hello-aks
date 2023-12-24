@@ -31,11 +31,14 @@ if (process.env.NODE_ENV === 'local') {
       type: 'azure-active-directory-msi-app-service',
       options: {
         tokenProvider: (callback: any) => {
+          logger.log('step1', '');
           msRestAzure.loginWithAppServiceMSI({ resource: 'https://database.windows.net/' }, (err: any, credentials: any) => {
+            logger.log('step2', '');
             if (err) {
               logger.log('tokenProvider err', JSON.stringify(err));
               callback(err, null);
             } else {
+              logger.log('step3', '');
               credentials.getToken((tokenError: any, tokenResponse: any) => {
                 if (tokenError) {
                   logger.log('tokenProvider token error', JSON.stringify(tokenError));
@@ -46,6 +49,7 @@ if (process.env.NODE_ENV === 'local') {
                 }
               });
             }
+            logger.log('step4', '');
           });
         },
       },
@@ -56,7 +60,7 @@ if (process.env.NODE_ENV === 'local') {
 app.get('/', (req: Request, res: Response) => {
   logger.log('/', 'customer visits home page');
 
-  res.send('Changed deployment name version 5!');
+  res.send('Changed deployment name version 6!');
 });
 
 app.get('/users', async (req, res) => {
