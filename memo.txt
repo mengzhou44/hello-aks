@@ -15,3 +15,11 @@ az role assignment create --assignee c276b0aa-1f05-4a6f-82fd-ef19e217060d  --rol
 
 b. # Assign SQL DB Contributor role at the database level
 az role assignment create --assignee c276b0aa-1f05-4a6f-82fd-ef19e217060d --role "SQL DB Contributor" --scope "/subscriptions/edbbf721-5f9e-4391-ba35-7adaf62f0416/resourceGroups/aks-course-rg/providers/Microsoft.Sql/servers/meng-db-server/databases/meng-db"
+
+
+6.  get  cluster managed  client id 
+az aks show --resource-group aks-course-rg  --name  hello-cluster  --query identityProfile.kubeletidentity.clientId --output tsv
+abea76c1-c5b7-47e3-bf61-5233258dd16a
+
+6.  get  cluster managed  client secret 
+az aks update-credentials --resource-group  aks-course-rg   --name hello-cluster  --reset-service-principal --service-principal  abea76c1-c5b7-47e3-bf61-5233258dd16a  --client-secret cGVyaGFwc2h1bnRlcnBhcmtwYXJ0bHl1bmRlcm9wZW4=
