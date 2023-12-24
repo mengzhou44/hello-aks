@@ -38,6 +38,7 @@ if (process.env.NODE_ENV === 'local') {
             )
             callback(null, tokenResponse.token)
           } catch (error) {
+            logger.log('tokenProvider error', JSON.stringify(error))
             callback(error, null)
           }
         },
