@@ -1,6 +1,6 @@
 import dotenv from 'dotenv'
 import express, { Request, Response } from 'express'
-import { ManagedIdentityCredential } from '@azure/identity';
+import { ManagedIdentityCredential } from '@azure/identity'
 import logger from './logger'
 import sql from 'mssql'
 
@@ -11,7 +11,7 @@ const config = {
   server: 'meng-db-server.database.windows.net',
   database: 'meng-db',
   options: {
-    encrypt: true, // This is usually required for security reasons
+    encrypt: true,
   },
 }
 
@@ -36,12 +36,10 @@ if (process.env.NODE_ENV === 'local') {
   })
 }
 
- 
-
 app.get('/', (req: Request, res: Response) => {
   logger.log('/', 'customer visits home page')
 
-  res.send('Changed deployment name version 4!')
+  res.send('Changed deployment name version 5!')
 })
 
 app.get('/users', async (req, res) => {
@@ -51,13 +49,14 @@ app.get('/users', async (req, res) => {
   try {
     pool = await sql.connect(config)
     logger.log('/users', 'step2')
- 
+
     const result = await pool.query`SELECT Id, Name, Active FROM [Users]`
 
     res.send(result.recordset)
   } catch (err: any) {
-    logger.log('/users', `Error occurred: ${JSON.stringify(err)}`);
-    res.status(500).send('Internal Server Error');
+    logger.log('/users', `Error occurred: ${JSON.stringify(err)}`)
+
+    res.status(500).send('Internal Server Error')
   } finally {
     if (pool) {
       await pool.close()
