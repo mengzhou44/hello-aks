@@ -51,13 +51,13 @@ app.get('/users', async (req, res) => {
   try {
     pool = await sql.connect(config)
     logger.log('/users', 'step2')
-    logger.log('/users', JSON.stringify(pool))
+ 
     const result = await pool.query`SELECT Id, Name, Active FROM [Users]`
 
     res.send(result.recordset)
   } catch (err: any) {
-    logger.log('/users', `error message: ${err.message}`)
-    res.status(200).send(err.message)
+    logger.log('/users', `Error occurred: ${JSON.stringify(err)}`);
+    res.status(500).send('Internal Server Error');
   } finally {
     if (pool) {
       await pool.close()
