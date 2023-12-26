@@ -23,7 +23,7 @@ RUN npm run build
 EXPOSE 3000
 
 # Set environment variables
-ENV NODE_ENV=local
+ENV NODE_ENV=production
 ENV PORT=3000
 
 # Command to run your application

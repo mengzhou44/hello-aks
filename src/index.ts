@@ -30,18 +30,7 @@ if (process.env.NODE_ENV === 'local') {
     authentication: {
       type: 'azure-active-directory-msi-app-service',
       options: {
-        tokenProvider: async (callback: any) => {
-          try {
-            const credential = new DefaultAzureCredential()
-            const tokenResponse = await credential.getToken(
-              'https://database.windows.net/.default'
-            )
-            callback(null, tokenResponse.token)
-          } catch (error) {
-            logger.log('tokenProvider error', JSON.stringify(error))
-            callback(error, null)
-          }
-        },
+        tokenCredential: new DefaultAzureCredential(),
       },
     },
   })
@@ -60,6 +49,8 @@ app.get('/users', async (req, res) => {
     const result = await pool.query`SELECT Id, Name, Active FROM Users`
     res.send(result.recordset)
   } catch (err: any) {
+    logger.log('/users',JSON.stringify(err,null,4))
+
     res.status(500).send(`Internal Server Error ${JSON.stringify(err)} `)
   } finally {
     if (pool) {

@@ -21,6 +21,6 @@ class Logger {
     }
   }
 
-  export default new Logger('6594dca3-9bf1-4f07-8610-a4c1fbdb9b34')
+  export default new Logger('60f412a8-a813-410c-94f1-5ca7c1e6892e')
   
  

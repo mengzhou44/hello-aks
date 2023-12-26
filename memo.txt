@@ -1,10 +1,32 @@
+CREATE TABLE Users (
+    ID INT PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Active BIT DEFAULT 1
+);
+
+
+ACR_USER_NAME: menghellocontainerregistry
+ACR_PASSWORD: h96PfPTG5Zr0yLlcGNdr4P4vNrsd6MQPr0lu3mhFQm+ACRC6kMNu
+
+
+AZURE_CREDENTIAL
+{
+  "clientId": "1754f3c5-30db-4e43-b576-5c7150745691",
+  "clientSecret": "Uz.8Q~FF_EJ7~gtLGZ6LLs5IUtuhWiDBR~OP_adB",
+  "tenantId": "a4c2af85-7e3c-4bad-9d48-f1cdc77db503",
+  "subscriptionId": "edbbf721-5f9e-4391-ba35-7adaf62f0416",
+}
+
+az aks get-credentials --resource-group aks-course-rg --name hello-cluster
+
 1. create a virtual network with two subnets db-subnets, and cluster-subnets
+
 2. create meng-db and meng-db-server resource and add a private entpoint to v-net/db-subnet;
+
 3. create aks cluster, open Access  Controil (IAM) to grant hello-app cluster admin role (so github workflow can run deployment scripts against the cluster)
 
 4. create managed identity for aks cluster 
 az aks update --resource-group aks-course-rg  --name hello-cluster --enable-managed-identity
-
 
 az aks show --resource-group aks-course-rg  --name hello-cluster  --query identity
 
